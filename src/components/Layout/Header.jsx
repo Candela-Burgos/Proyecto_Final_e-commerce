@@ -1,10 +1,20 @@
-import { Box, Flex, Heading, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Link,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ModalLogin } from '../../pages/Auth/Modal';
-import { Profile } from '../../pages/Profile/Profile';
+import { FiSun, FiMoon } from 'react-icons/fi';
 
-export const Header = ({ user, setUser }) => {
+export const Header = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Flex
       as="nav"
@@ -31,10 +41,24 @@ export const Header = ({ user, setUser }) => {
         <Link as={NavLink} to="/" color="white" mr="1.5em">
           Home
         </Link>
-        <Link as={NavLink} to="/product" color="white" mx="1.5em">
+        <Link as={NavLink} to="/products" color="white" mx="1.5em">
           Store
         </Link>
-        <ModalLogin user={user} setUser={setUser} />
+        <Link as={NavLink} to="/profile" color="white" mx="1.5em">
+          Profile
+        </Link>
+        <Text color="#fff">|</Text>
+        <Button
+          onClick={toggleColorMode}
+          color="white"
+          // mx="1em"
+          bgColor="transparent"
+          _hover={{ bgColor: 'transparent' }}
+          _focus={{ bgColor: 'transparent' }}
+        >
+          {colorMode === 'light' ? <FiSun /> : <FiMoon />}
+        </Button>
+        <ModalLogin />
       </Box>
     </Flex>
   );

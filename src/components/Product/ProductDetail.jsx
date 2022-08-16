@@ -7,9 +7,7 @@ const ProductDetail = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(
-      `https://strapiecommerce-production-b5fc.up.railway.app/api/products/${id}?populate=image`
-    )
+    fetch(`http://localhost:1337/api/products/${id}?populate=image`)
       .then((res) => res.json())
       .then((data) => setDetail(data));
   }, [id]);
@@ -18,7 +16,7 @@ const ProductDetail = () => {
     <Flex
       w="90%"
       h="100%"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       wrap="wrap"
       gap={10}
@@ -35,6 +33,7 @@ const ProductDetail = () => {
           flexDirection="row"
           bgColor="#00000036"
           borderRadius="5px"
+          boxShadow="-1px 1px 55px 2px rgba(0,0,0,0.44) inset"
         >
           <Image
             src={detail.data.attributes.image.data.attributes.url}

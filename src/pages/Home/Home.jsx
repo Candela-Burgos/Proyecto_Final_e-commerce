@@ -6,14 +6,19 @@ const Home = () => {
     <Flex
       w="90%"
       h="100%"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
+      flexDirection="column"
       wrap="wrap"
       gap={10}
       mt="8em"
     >
-      <Heading color="#fff">Welcome</Heading>
-      <Text color="#fff">Here you can find the game you want to buy</Text>
+      <Heading color="#fff" fontSize="5em">
+        Welcome!
+      </Heading>
+      <Text color="#fff" fontSize="2em">
+        Games for everyone
+      </Text>
     </Flex>
   );
 };

@@ -27,7 +27,7 @@ const ShopLayout = ({ children }) => {
       >
         {children}
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </Flex>
   );
 };

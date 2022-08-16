@@ -1,8 +1,8 @@
 import { HStack, Input } from '@chakra-ui/react';
 import React from 'react';
-import { BiSearchAlt } from 'react-icons/bi';
+import { MdAttachMoney } from 'react-icons/md';
 
-export const ProductSeach = () => {
+export const ProductFilterPrice = () => {
   return (
     <HStack
       as="form"
@@ -12,13 +12,13 @@ export const ProductSeach = () => {
       alignItems="center"
       className="productSearch"
     >
-      <BiSearchAlt fontSize="3em" color="#fff" />
+      <MdAttachMoney fontSize="3em" color="#fff" />
       <Input
-        type="text"
+        type="number"
         color="#fff"
         bgColor="#00000036"
         _focus={{ outline: 'none' }}
-        placeholder="Search your favorite game..."
+        placeholder="Choose a price..."
       />
     </HStack>
   );

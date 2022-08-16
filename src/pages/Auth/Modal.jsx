@@ -13,87 +13,58 @@ import {
   MenuGroup,
   MenuItem,
   MenuDivider,
+  Tab,
+  Tabs,
+  TabList,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
+import { useAuth } from '../../Hook/Zustand/useAuth';
 import { useOpen } from '../../Hook/Zustand/useOpen';
 import { Profile } from '../Profile/Profile';
 import { Login } from './Login';
 import { Register } from './Register';
 
-export const ModalLogin = ({ user, setUser }) => {
+export const ModalLogin = () => {
   const { isOpen, onOpen, onClose } = useOpen();
   const [click, setClick] = useState(true);
+  const {
+    auth: { user },
+    logout,
+  } = useAuth();
+
   return (
     <>
-      <Button
-        color="white"
-        mx="1.5em"
-        onClick={onOpen}
-        variant="ghost"
-        colorScheme="whiteAlpha"
-        _hover={{ bg: 'none' }}
-        _focus={{ bg: 'none' }}
-      >
-        <FaUser />
-      </Button>
-      {/* {user ? ( */}
-      {/* <Menu>
-        <MenuButton as={Button}>
+      {user ? (
+        <Button onClick={logout}>Log Out</Button>
+      ) : (
+        <Button
+          color="white"
+          // mx="1.5em"
+          onClick={onOpen}
+          variant="ghost"
+          colorScheme="whiteAlpha"
+          _hover={{ bg: 'none' }}
+          _focus={{ bg: 'none' }}
+        >
           <FaUser />
-        </MenuButton>
-        <MenuList>
-          <MenuGroup title="Profile">
-            <MenuItem>My Account</MenuItem>
-            <MenuItem>Payments </MenuItem>
-          </MenuGroup>
-          <MenuDivider />
-          <MenuGroup title="Help">
-            <MenuItem>Docs</MenuItem>
-            <MenuItem>FAQ</MenuItem>
-          </MenuGroup>
-        </MenuList>
-      </Menu> */}
-      {/* ) : ( */}
+        </Button>
+      )}
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Box
-              display="flex"
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              <Button
-                bgColor="transparent"
-                _hover={{ bg: 'none' }}
-                _focus={{ bg: 'none' }}
-                onClick={() => setClick(true)}
-              >
-                Log In
-              </Button>
-              <Button
-                bgColor="transparent"
-                _hover={{ bg: 'none' }}
-                _focus={{ bg: 'none' }}
-                _active={{ borderBottom: '1px solid blue' }}
-                onClick={() => setClick(false)}
-              >
-                Register
-              </Button>
-            </Box>
+            <Tabs isFitted variant="enclosed" pt="1.2em">
+              <TabList>
+                <Tab onClick={() => setClick(true)}>Log In</Tab>
+                <Tab onClick={() => setClick(false)}>Register</Tab>
+              </TabList>
+            </Tabs>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            {click ? (
-              <Login user={user} setUser={setUser} />
-            ) : (
-              <Register user={user} setUser={setUser} />
-            )}
-          </ModalBody>
+          <ModalBody>{click ? <Login /> : <Register />}</ModalBody>
         </ModalContent>
       </Modal>
-      {/* )} */}
     </>
   );
 };
