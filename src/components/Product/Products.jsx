@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Input,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ProductSeach } from './ProductSearch';
 import { ProductFilter } from './ProductFilter';
@@ -8,10 +16,15 @@ import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [title, setTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(600);
   const [page, setPage] = useState(0);
   const qs = require('qs');
 
-  const query = qs.stringify(
+  const pagination = qs.stringify(
     {
       pagination: {
         start: `${page}`,
@@ -23,24 +36,81 @@ const Products = () => {
     }
   );
 
+  const filtersTitle = qs.stringify(
+    {
+      filters: {
+        title: {
+          $containsi: `${title}`,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+
+  const filtersCategory = qs.stringify(
+    {
+      filters: {
+        categories: {
+          name: {
+            $containsi: `${categories}`,
+          },
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+
+  const filtersPrice = qs.stringify(
+    {
+      filters: {
+        price: {
+          $gte: `${minPrice}`,
+          $lte: `${maxPrice}`,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+
   useEffect(() => {
-    fetch(`http://localhost:1337/api/products?populate=image&${query}`)
+    setIsLoading(true);
+    fetch(
+      `http://localhost:1337/api/products?populate=image&populate=categories&${pagination}&${filtersTitle}&${filtersCategory}&${filtersPrice}`
+    )
       .then((res) => res.json())
-      .then((data) => setProducts(data.data));
-  }, [query]);
+      .then((data) => {
+        if (!data.data) {
+          console.log('ERROR');
+        }
+        setProducts(data.data);
+      });
+    setIsLoading(false);
+  }, [pagination, filtersTitle, filtersCategory, filtersPrice]);
 
   return (
-    <Flex
-      w="90%"
-      h="100%"
-      justifyContent="center"
-      alignItems="center"
-      wrap="wrap"
-      gap={10}
-      mt="8em"
-      mb="13em"
-    >
-      {/* {
+    <>
+      <Flex
+        w="100%"
+        h="auto"
+        justifyContent="center"
+        alignItems="center"
+        gap={10}
+        my="3em"
+      >
+        <ProductSeach setTitle={setTitle} />
+        <ProductFilter setCategories={setCategories} />
+        <ProductFilterPrice
+          setMinPrice={setMinPrice}
+          setMaxPrice={setMaxPrice}
+        />
+      </Flex>
+      {isLoading && (
         <Spinner
           thickness="4px"
           speed="0.65s"
@@ -48,24 +118,18 @@ const Products = () => {
           color="blue.500"
           size="xl"
         />
-      } */}
-      <Box
-        display="flex"
-        w="100%"
-        h="auto"
-        justifyContent="center"
-        alignItems="center"
-        gap={10}
-      >
-        <ProductSeach />
-        <ProductFilter />
-        <ProductFilterPrice />
-      </Box>
+      )}
+      {products && !products.length && (
+        <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
+          <Text color="#fff" fontSize="1.3em">
+            There are no products matching your search
+          </Text>
+        </Flex>
+      )}
       {products &&
         products.map((product) => (
           <Link key={products.id} to={`/product-detail/${product.id}`}>
-            <Box
-              display="flex"
+            <Flex
               w="280px"
               h="auto"
               justifyContent="center"
@@ -96,7 +160,7 @@ const Products = () => {
                   ${product.attributes.price}
                 </Text>
               </Box>
-            </Box>
+            </Flex>
           </Link>
         ))}
       <Box
@@ -136,6 +200,7 @@ const Products = () => {
           >
             {/* {query} */}
             21
+            {/* {products.length} */}
           </Text>
         </Box>
         <Button
@@ -146,7 +211,7 @@ const Products = () => {
           <GrFormNextLink fontSize="2em" color="#35258c" />
         </Button>
       </Box>
-    </Flex>
+    </>
   );
 };
 

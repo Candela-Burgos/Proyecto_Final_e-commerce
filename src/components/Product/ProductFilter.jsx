@@ -2,7 +2,7 @@ import { HStack, Input, Select } from '@chakra-ui/react';
 import React from 'react';
 import { BiCategoryAlt } from 'react-icons/bi';
 
-export const ProductFilter = () => {
+export const ProductFilter = ({ setCategories }) => {
   return (
     <HStack
       as="form"
@@ -18,7 +18,7 @@ export const ProductFilter = () => {
         color="#fff"
         bgColor="#00000036"
         _focus={{ outline: 'none' }}
-        // placeholder="Choose a category..."
+        onChange={(e) => setCategories(e.target.value)}
       >
         <option style={{ backgroundColor: '#35258c' }} disabled selected>
           Choose a category...

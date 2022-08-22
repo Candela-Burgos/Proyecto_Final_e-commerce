@@ -1,23 +1,28 @@
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Link,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
-import { useAuth } from '../../Hook/Zustand/useAuth';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 export const Profile = () => {
-  const {
-    auth: { user },
-  } = useAuth();
-  console.log(user);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <Flex
       w="100%"
-      h="100%"
+      h="100vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
     >
-      <Box
-        display="flex"
+      <Flex
         w="80%"
         h="80%"
         justifyContent="space-evenly"
@@ -27,49 +32,42 @@ export const Profile = () => {
         <Heading color="#fff" my="1em" fontSize="3em">
           My profile
         </Heading>
-        <Box
-          display="flex"
-          w="80%"
-          h="80%"
+        <Flex
+          w="50%"
           justifyContent="flex-start"
-          alignItems="center"
+          alignItems="flex-end"
           flexDirection="row"
         >
-          <Box
-            display="flex"
-            w="50%"
-            h="100%"
+          <Image
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            alt={user.username}
+            w="30%"
+          />
+          <Flex
             justifyContent="center"
             alignItems="space-between"
             flexDirection="column"
-            mr="2em"
+            ml="1em"
           >
-            <Text color="#fff">Photo:</Text>
-            <Text color="#fff" mb="1em">
-              Username:
+            <Text color="#fff" mb="1em" fontSize="1.3em">
+              <strong>Username:</strong> {user.username}
             </Text>
-            <Text color="#fff">Email:</Text>
-          </Box>
-          <Box
-            display="flex"
-            w="50%"
-            h="100%"
-            justifyContent="center"
-            alignItems="space-between"
-            flexDirection="column"
-          >
-            <Image
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-              alt={user.username}
-              w="30%"
-            />
-            <Text color="#fff" mb="1em">
-              {user.username}
+            <Text color="#fff" fontSize="1.3em">
+              <strong>Email:</strong> {user.email}
             </Text>
-            <Text color="#fff">{user.email}</Text>
-          </Box>
-        </Box>
-      </Box>
+          </Flex>
+        </Flex>
+        <Flex
+          w="50%"
+          justifyContent="flex-start"
+          alignItems="flex-end"
+          flexDirection="row"
+        >
+          <Link as={NavLink} to="/cart">
+            <Button>Go to my cart</Button>
+          </Link>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

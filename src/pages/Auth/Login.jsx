@@ -3,23 +3,30 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Toast,
+  InputGroup,
+  InputRightElement,
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../Hook/Zustand/useAuth';
+import { useDispatch } from 'react-redux';
+import { login } from '../../Hook/Redux/slice/authSlice';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { onCloseModal } from '../../Hook/Redux/slice/openModalSlice';
 
 const Login = () => {
-  const toast = useToast();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { login, auth } = useAuth();
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
+  const toast = useToast();
+  const dispatch = useDispatch();
 
   const enviarForm = async ({ email, password }) => {
     const response = await fetch('http://localhost:1337/api/auth/local', {
@@ -31,10 +38,15 @@ const Login = () => {
     if (!data.user) {
       throw new Error('error');
     }
-    login(data);
+    dispatch(login(data));
+    dispatch(onCloseModal());
+    toast({
+      title: `Welcome ${data.user.username}!`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
   };
-
-  console.log(auth);
 
   return (
     <VStack as="form" onSubmit={handleSubmit(enviarForm)} pb="1em" gap="5">
@@ -56,18 +68,23 @@ const Login = () => {
       </FormControl>
       <FormControl isInvalid={errors.password} isRequired>
         <FormLabel htmlFor="password">Password</FormLabel>
-        <Input
-          id="password"
-          type="password"
-          placeholder="Password"
-          {...register('password', {
-            required: 'This field is required',
-            minLength: {
-              value: 8,
-              message: 'At least 8 characters',
-            },
-          })}
-        />
+        <InputGroup>
+          <Input
+            id="password"
+            type={show ? 'text' : 'password'}
+            placeholder="Password"
+            {...register('password', {
+              required: 'This field is required',
+              minLength: {
+                value: 8,
+                message: 'At least 8 characters',
+              },
+            })}
+          />
+          <InputRightElement onClick={handleClick}>
+            {show ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+          </InputRightElement>
+        </InputGroup>
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
       <Input type="submit" value="Send" />

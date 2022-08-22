@@ -6,16 +6,12 @@ export const Footer = () => {
     <Flex
       as="footer"
       w="100%"
-      h="10%"
-      position="fixed"
-      left={0}
-      bottom="0"
+      p={8}
       alignItems="center"
       justifyContent="center"
-      mt="10em"
-      bgColor="black"
+      bgColor="#000"
     >
-      <Text color="#fff">Derechos @knd</Text>
+      <Text color="#fff">Created by Knd - React Final Project 2022</Text>
     </Flex>
   );
 };

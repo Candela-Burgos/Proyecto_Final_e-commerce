@@ -6,42 +6,36 @@ import {
   ModalHeader,
   Modal,
   ModalOverlay,
-  Box,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuGroup,
-  MenuItem,
-  MenuDivider,
   Tab,
   Tabs,
   TabList,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { useAuth } from '../../Hook/Zustand/useAuth';
-import { useOpen } from '../../Hook/Zustand/useOpen';
-import { Profile } from '../Profile/Profile';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Hook/Redux/slice/authSlice';
+import {
+  onCloseModal,
+  onOpenModal,
+} from '../../Hook/Redux/slice/openModalSlice';
 import { Login } from './Login';
 import { Register } from './Register';
 
 export const ModalLogin = () => {
-  const { isOpen, onOpen, onClose } = useOpen();
   const [click, setClick] = useState(true);
-  const {
-    auth: { user },
-    logout,
-  } = useAuth();
+  const { user } = useSelector((state) => state.auth);
+  const openModal = useSelector((state) => state.openModal);
+  const dispatch = useDispatch();
 
   return (
     <>
       {user ? (
-        <Button onClick={logout}>Log Out</Button>
+        <Button onClick={() => dispatch(logout())}>Log Out</Button>
       ) : (
         <Button
           color="white"
           // mx="1.5em"
-          onClick={onOpen}
+          onClick={() => dispatch(onOpenModal())}
           variant="ghost"
           colorScheme="whiteAlpha"
           _hover={{ bg: 'none' }}
@@ -50,7 +44,11 @@ export const ModalLogin = () => {
           <FaUser />
         </Button>
       )}
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isCentered
+        isOpen={openModal}
+        onClose={() => dispatch(onCloseModal())}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>

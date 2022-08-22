@@ -5,30 +5,35 @@ import { Header } from './Header';
 
 const ShopLayout = ({ children }) => {
   return (
+    // <Flex
+    //   w="100%"
+    //   justifyContent="center"
+    //   alignItems="center"
+    //   flexDirection="column"
+    //   // mb="8em"
+    // >
     <Flex
       w="100%"
-      h="100vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      // mb="8em"
-      className="shopLayout"
+      className="HOLA"
+      pt="6em"
     >
       <Header />
-      <Box
+      <Flex
         as="main"
-        display="flex"
-        w="100%"
-        h="100vh"
-        justify="center"
+        w="90%"
+        justifyContent="center"
         alignItems="center"
-        flexDirection="column"
-        className="boxLayout"
+        wrap="wrap"
+        gap={10}
       >
         {children}
-      </Box>
-      {/* <Footer /> */}
+      </Flex>
+      <Footer />
     </Flex>
+    // </Flex>
   );
 };
 

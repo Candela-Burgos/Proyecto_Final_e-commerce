@@ -10,23 +10,37 @@ import {
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ModalLogin } from '../../pages/Auth/Modal';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { FiSun, FiMoon, FiShoppingCart } from 'react-icons/fi';
+import { onOpenCart } from '../../Hook/Redux/slice/openCartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { CartDrawer } from '../Cart/CartDrawer';
 
 export const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const cart = useSelector((state) => state.cart);
+  const btnRef = React.useRef();
+  const dispatch = useDispatch();
+
+  // const getTotalQuantity = () => {
+  //   let acc = 0;
+  //   cart.cartItems.forEach((cartItem) => {
+  //     acc += cartItem.cartQuantity;
+  //   });
+  //   return acc;
+  // };
 
   return (
     <Flex
       as="nav"
-      bgColor="black"
+      bgColor="#00000070"
       w="100%"
-      h="10%"
+      p={8}
       justifyContent="space-between"
       alignItems="center"
       position="fixed"
       top={0}
       left={0}
-      zIndex={10}
+      zIndex={2}
     >
       <Heading color="white" ml="2em">
         KGS
@@ -51,13 +65,24 @@ export const Header = () => {
         <Button
           onClick={toggleColorMode}
           color="white"
-          // mx="1em"
+          ml="1em"
           bgColor="transparent"
           _hover={{ bgColor: 'transparent' }}
           _focus={{ bgColor: 'transparent' }}
         >
           {colorMode === 'light' ? <FiSun /> : <FiMoon />}
         </Button>
+        <Link
+          color="white"
+          mx="1em"
+          ref={btnRef}
+          colorScheme="teal"
+          onClick={() => dispatch(onOpenCart())}
+        >
+          <FiShoppingCart />
+          <CartDrawer />
+          {/* {getTotalQuantity()} */}
+        </Link>
         <ModalLogin />
       </Box>
     </Flex>

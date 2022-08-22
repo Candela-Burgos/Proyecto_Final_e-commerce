@@ -1,10 +1,33 @@
-import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { addToCart } from '../../Hook/Redux/slice/cartSlice';
 
 const ProductDetail = () => {
   const [detail, setDetail] = useState();
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const handleAddToCart = (detail) => {
+    if (dispatch(addToCart(detail))) {
+      toast({
+        title: `${detail.data.attributes.title} added to cart.`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   useEffect(() => {
     fetch(`http://localhost:1337/api/products/${id}?populate=image`)
@@ -15,12 +38,10 @@ const ProductDetail = () => {
   return (
     <Flex
       w="90%"
-      h="100%"
+      h="100vh"
       justifyContent="center"
       alignItems="center"
       wrap="wrap"
-      gap={10}
-      mt="8em"
     >
       {detail && (
         <Box
@@ -53,9 +74,7 @@ const ProductDetail = () => {
             <Text color="#fbb13c" my="1em">
               ${detail.data.attributes.price}
             </Text>
-            <Link to={`/productDetail/${detail.id}`}>
-              <Button>Add to cart</Button>
-            </Link>
+            <Button onClick={() => handleAddToCart(detail)}>Add to cart</Button>
           </Box>
         </Box>
       )}
