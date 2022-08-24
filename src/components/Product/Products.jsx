@@ -13,85 +13,19 @@ import { ProductSeach } from './ProductSearch';
 import { ProductFilter } from './ProductFilter';
 import { ProductFilterPrice } from './ProductFilterPrice';
 import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr';
+import { useGet } from '../../Hook/useGet';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [title, setTitle] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [categories, setCategories] = useState('');
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(600);
-  const [page, setPage] = useState(0);
-  const qs = require('qs');
-
-  const pagination = qs.stringify(
-    {
-      pagination: {
-        start: `${page}`,
-        limit: 7,
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  const filtersTitle = qs.stringify(
-    {
-      filters: {
-        title: {
-          $containsi: `${title}`,
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  const filtersCategory = qs.stringify(
-    {
-      filters: {
-        categories: {
-          name: {
-            $containsi: `${categories}`,
-          },
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  const filtersPrice = qs.stringify(
-    {
-      filters: {
-        price: {
-          $gte: `${minPrice}`,
-          $lte: `${maxPrice}`,
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(
-      `http://localhost:1337/api/products?populate=image&populate=categories&${pagination}&${filtersTitle}&${filtersCategory}&${filtersPrice}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.data) {
-          console.log('ERROR');
-        }
-        setProducts(data.data);
-      });
-    setIsLoading(false);
-  }, [pagination, filtersTitle, filtersCategory, filtersPrice]);
+  const {
+    products,
+    isLoading,
+    page,
+    setPage,
+    setTitle,
+    setCategories,
+    setMinPrice,
+    setMaxPrice,
+  } = useGet();
 
   return (
     <>
@@ -136,7 +70,7 @@ const Products = () => {
               alignItems="center"
               flexDirection="column"
               bgColor="#00000036"
-              borderRadius="5px"
+              borderRadius="30px"
               transition="all .5s ease-out"
               _hover={{
                 transform: 'scale(1.06)',
@@ -146,6 +80,7 @@ const Products = () => {
               <Image
                 src={product.attributes.image.data.attributes.url}
                 alt={product.attributes.title}
+                borderRadius="30px"
               />
               <Box
                 display="flex"

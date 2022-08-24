@@ -1,17 +1,14 @@
 import {
-  Box,
   Button,
   Flex,
   Heading,
   Image,
   Link,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -24,7 +21,7 @@ import {
   decreaseQuantity,
   deleteItemCart,
   increaseQuantity,
-} from '../../Hook/Redux/slice/cartSlice';
+} from '../../Redux/slice/cartSlice';
 
 export const CartItem = () => {
   const cart = useSelector((state) => state.cart);
@@ -47,18 +44,9 @@ export const CartItem = () => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
+      mt="4em"
     >
-      {/* <Flex
-        w="100%"
-        // h="100%"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="column"
-        // mt="10em"
-        // mb="3em"
-      > */}
       <Heading color="#fff">My Cart</Heading>
-      {/* </Flex> */}
       {cart.cartItems.length === 0 ? (
         <Flex
           w="100%"
@@ -79,28 +67,27 @@ export const CartItem = () => {
           </Flex>
         </Flex>
       ) : (
-        <>
+        <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
           <TableContainer
             color="#fff"
+            bgColor="#00000070"
             w="70%"
-            // display="flex"
-            // justifyContent="center"
-            // alignItems="center"
+            h="80%"
+            maxH="70%"
+            overflowY="auto"
+            borderRadius="5px"
           >
-            <Table variant="simple" overflowX="auto">
+            <Table variant="simple">
               <Thead>
                 <Tr>
                   <Th color="#ffffff90" textAlign="center">
                     Product
                   </Th>
-                  <Th color="#ffffff90" textAlign="center">
+                  <Th color="#fbb13c90" textAlign="center">
                     Price
                   </Th>
                   <Th color="#ffffff90" textAlign="center" w="1px">
                     Quantity
-                  </Th>
-                  <Th color="#ffffff90" textAlign="center">
-                    Total
                   </Th>
                 </Tr>
               </Thead>
@@ -108,13 +95,18 @@ export const CartItem = () => {
                 {cart.cartItems?.map((cartItem) => (
                   <Tr key={cartItem.data.id}>
                     <Td textAlign="center">
-                      <Flex justifyContent="flex-start" alignItems="center">
+                      <Flex
+                        w="100%"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                      >
                         <Image
                           src={
                             cartItem.data.attributes.image.data.attributes.url
                           }
                           alt={cartItem.data.attributes.title}
                           w="10%"
+                          borderRadius="3px"
                         />
                         <Flex
                           justifyContent="center"
@@ -139,10 +131,11 @@ export const CartItem = () => {
                         </Flex>
                       </Flex>
                     </Td>
-                    <Td textAlign="center">{cartItem.data.attributes.price}</Td>
+                    <Td textAlign="center" color="#fbb13c">
+                      {cartItem.data.attributes.price}
+                    </Td>
                     <Td textAlign="center">
                       <Flex
-                        // w="100%"
                         justifyContent="flex-start"
                         alignItems="center"
                         border="1px solid #fff"
@@ -178,24 +171,82 @@ export const CartItem = () => {
                         </Button>
                       </Flex>
                     </Td>
-                    <Td textAlign="center">
-                      total: {cartItem.data.attributes.price}
-                    </Td>
                   </Tr>
                 ))}
               </Tbody>
             </Table>
           </TableContainer>
-          <Button onClick={() => dispatch(clearCart())} mt="2em">
-            Clear cart
-          </Button>
-          {/* <Text>Total quantity: {getTotal().totalQuantity}</Text>
-          <Text>Total price: {getTotal().totalPrice}</Text> */}
-          <Text>
-            total ({getTotal().totalQuantity}) :{' '}
-            <strong>${getTotal().totalPrice}</strong>
-          </Text>
-        </>
+          <Flex
+            w="60%"
+            h="70%"
+            justifyContent="flex-start"
+            alignItems="center"
+            flexDirection="column"
+            ml="2em"
+          >
+            <Flex
+              w="100%"
+              h="60%"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              flexDirection="column"
+              bgColor="#ffffff60"
+              borderRadius="5px"
+            >
+              <Text
+                color="#000"
+                fontSize="2em"
+                textAlign="left"
+                m="1em"
+                fontWeight="bold"
+              >
+                Order
+              </Text>
+              <Flex
+                w="100%"
+                justifyContent="center"
+                alignItems="start"
+                flexDirection="column"
+                gap={5}
+              >
+                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                  <strong>Shipping:</strong> For the moment, we do not do
+                  deliveries {":'("}
+                </Text>
+                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                  <strong>Total quantity:</strong> {getTotal().totalQuantity}
+                </Text>
+                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                  <strong>Total price:</strong> ${getTotal().totalPrice}
+                </Text>
+                <Flex
+                  w="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  mt="1em"
+                >
+                  <Button fontSize="1.3em" w="60%">
+                    Check out
+                  </Button>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex
+              w="100%"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="row"
+              gap={5}
+            >
+              <Link as={NavLink} to="/products" mt="2em">
+                <Button>Continue shopping</Button>
+              </Link>
+              <Button onClick={() => dispatch(clearCart())} mt="2em">
+                Clear cart
+              </Button>
+            </Flex>
+          </Flex>
+        </Flex>
       )}
     </Flex>
   );

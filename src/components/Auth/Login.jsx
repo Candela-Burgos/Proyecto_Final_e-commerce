@@ -11,9 +11,9 @@ import {
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { login } from '../../Hook/Redux/slice/authSlice';
+import { login } from '../../Redux/slice/authSlice';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { onCloseModal } from '../../Hook/Redux/slice/openModalSlice';
+import { onCloseModal } from '../../Redux/slice/openModalSlice';
 
 const Login = () => {
   const {
@@ -36,12 +36,20 @@ const Login = () => {
     });
     const data = await response.json();
     if (!data.user) {
-      throw new Error('error');
+      throw new Error(
+        toast({
+          title: 'An error ocurred',
+          description: 'The information is invalid',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+      );
     }
     dispatch(login(data));
     dispatch(onCloseModal());
     toast({
-      title: `Welcome ${data.user.username}!`,
+      title: `${data.user.username} nice to see you here again!`,
       status: 'success',
       duration: 3000,
       isClosable: true,

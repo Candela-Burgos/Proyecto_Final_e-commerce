@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ModalLogin } from '../../pages/Auth/Modal';
+import { ModalLogin } from '../Auth/Modal';
 import { FiSun, FiMoon, FiShoppingCart } from 'react-icons/fi';
-import { onOpenCart } from '../../Hook/Redux/slice/openCartSlice';
+import { onOpenCart } from '../../Redux/slice/openCartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartDrawer } from '../Cart/CartDrawer';
 
@@ -21,13 +21,13 @@ export const Header = () => {
   const btnRef = React.useRef();
   const dispatch = useDispatch();
 
-  // const getTotalQuantity = () => {
-  //   let acc = 0;
-  //   cart.cartItems.forEach((cartItem) => {
-  //     acc += cartItem.cartQuantity;
-  //   });
-  //   return acc;
-  // };
+  const getTotalQuantity = () => {
+    let acc = 0;
+    cart.cartItems.forEach((cartItem) => {
+      acc += cartItem.cartQuantity;
+    });
+    return acc;
+  };
 
   return (
     <Flex
@@ -58,9 +58,6 @@ export const Header = () => {
         <Link as={NavLink} to="/products" color="white" mx="1.5em">
           Store
         </Link>
-        <Link as={NavLink} to="/profile" color="white" mx="1.5em">
-          Profile
-        </Link>
         <Text color="#fff">|</Text>
         <Button
           onClick={toggleColorMode}
@@ -81,7 +78,21 @@ export const Header = () => {
         >
           <FiShoppingCart />
           <CartDrawer />
-          {/* {getTotalQuantity()} */}
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="100%"
+            px="10px"
+            pb="3px"
+            w="1.3%"
+            h="18%"
+            position="absolute"
+            top={8}
+            right={158}
+            bgColor="red"
+          >
+            {getTotalQuantity()}
+          </Flex>
         </Link>
         <ModalLogin />
       </Box>

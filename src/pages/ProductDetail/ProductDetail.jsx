@@ -4,19 +4,28 @@ import {
   Flex,
   Heading,
   Image,
+  Link,
   Text,
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { addToCart } from '../../Hook/Redux/slice/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useParams } from 'react-router-dom';
+import { GrFormPreviousLink } from 'react-icons/gr';
+import { addToCart } from '../../Redux/slice/cartSlice';
 
 const ProductDetail = () => {
   const [detail, setDetail] = useState();
   const { id } = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
+  // const cart = useSelector((state) => state.cart);
+
+  // const maxStock = () => {
+  //   cart.cartItems.map(
+  //     (cartItem) => cartItem.cartQuantity === cartItem.data.attributes.stock
+  //   );
+  // };
 
   const handleAddToCart = (detail) => {
     if (dispatch(addToCart(detail))) {
@@ -74,7 +83,19 @@ const ProductDetail = () => {
             <Text color="#fbb13c" my="1em">
               ${detail.data.attributes.price}
             </Text>
-            <Button onClick={() => handleAddToCart(detail)}>Add to cart</Button>
+            <Flex justifyContent="center" alignItems="center" gap={5}>
+              <Link as={NavLink} to="/products">
+                <Button>
+                  <GrFormPreviousLink fontSize="2em" color="#35258c" />
+                </Button>
+              </Link>
+              <Button
+                // isDisabled={maxStock()}
+                onClick={() => handleAddToCart(detail)}
+              >
+                Add to cart
+              </Button>
+            </Flex>
           </Box>
         </Box>
       )}

@@ -5,19 +5,11 @@ import { Header } from './Header';
 
 const ShopLayout = ({ children }) => {
   return (
-    // <Flex
-    //   w="100%"
-    //   justifyContent="center"
-    //   alignItems="center"
-    //   flexDirection="column"
-    //   // mb="8em"
-    // >
     <Flex
       w="100%"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      className="HOLA"
       pt="6em"
     >
       <Header />
@@ -33,7 +25,6 @@ const ShopLayout = ({ children }) => {
       </Flex>
       <Footer />
     </Flex>
-    // </Flex>
   );
 };
 

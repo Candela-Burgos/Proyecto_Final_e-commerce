@@ -5,10 +5,13 @@ export const Error404 = () => {
   return (
     <Flex
       w="100%"
-      h="100%"
+      h="100vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
+      position="absolute"
+      top={0}
+      left={0}
       bgColor="#000"
     >
       <Image

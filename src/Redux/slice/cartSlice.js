@@ -6,8 +6,7 @@ const initialState = {
   // cartItems: localStorage.getItem('cartItems')
   //   ? JSON.parse(localStorage.getItem('cartItems'))
   //   : [],
-  cartTotalQuantity: 0,
-  cartTotalAmount: 0,
+  // isOpenCartState: false,
 };
 
 const cartSlice = createSlice({
@@ -50,6 +49,8 @@ const cartSlice = createSlice({
         itemIndex.cartQuantity--;
       }
     },
+    // onOpenCart: () => true,
+    // onCloseCart: (state) => state.isOpenCartState,
   },
 });
 
@@ -59,5 +60,7 @@ export const {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
+  // onOpenCart,
+  // onCloseCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -11,8 +11,8 @@ import {
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { login } from '../../Hook/Redux/slice/authSlice';
-import { onCloseModal } from '../../Hook/Redux/slice/openModalSlice';
+import { login } from '../../Redux/slice/authSlice';
+import { onCloseModal } from '../../Redux/slice/openModalSlice';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const Register = () => {
@@ -43,7 +43,15 @@ const Register = () => {
     );
     const data = await response.json();
     if (!data.user) {
-      throw new Error('error');
+      throw new Error(
+        toast({
+          title: 'An error ocurred',
+          description: 'The information is invalid',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+      );
     }
     dispatch(login(data));
     dispatch(onCloseModal());
