@@ -1,5 +1,5 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Carousel } from '../../components/Carousel/Carousel';
 
 const Home = () => {
   return (
@@ -18,6 +18,7 @@ const Home = () => {
       <Text color="#fff" fontSize="2em">
         Games for everyone
       </Text>
+      <Carousel />
     </Flex>
   );
 };

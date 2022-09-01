@@ -9,16 +9,15 @@ import { Error404 } from './pages/404/Error404';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import { CartItem } from './components/Cart/CartItem';
 import { Orders } from './pages/Orders/Orders';
+import { ModalLogin } from './components/Auth/Modal';
 
 function App() {
-  // icono de joystick BiJoystick
-
   return (
     <Flex
       w="100%"
       justifyContent="center"
       alignItems="center"
-      bgImage="url('https://img.freepik.com/vector-gratis/fondo-galaxia-acuarela_23-2149227639.jpg?w=1380&t=st=1661112521~exp=1661113121~hmac=39c9f43d9494fd7aaf9efe7a68196d528f7c80b0ae0955dda2a233cec42e514a')"
+      bgImage="url('https://img.freepik.com/vector-gratis/fondo-galaxia-estrellas-planetas-realistas_23-2148964716.jpg?w=1380&t=st=1661869403~exp=1661870003~hmac=21d419d567bfa119f77196c20aa96cd1972459f55f378c277955fbeba2f82a3f')"
       bgRepeat="round"
       bgSize="100%"
     >

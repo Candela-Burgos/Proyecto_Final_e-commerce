@@ -6,6 +6,7 @@ export const QSFilters = () => {
   const [title, setTitle] = useState('');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(600);
+  const [actualImage, setActualImage] = useState(1);
   const [page, setPage] = useState(0);
 
   const pagination = qs.stringify(
@@ -62,16 +63,31 @@ export const QSFilters = () => {
     }
   );
 
+  const filtersById = qs.stringify({
+    filters: {
+      $and: [
+        {
+          id: {
+            $eq: `${actualImage}`,
+          },
+        },
+      ],
+    },
+  });
+
   return {
     pagination,
     filtersTitle,
     filtersCategory,
     filtersPrice,
+    filtersById,
     page,
+    actualImage,
     setPage,
     setTitle,
     setCategories,
     setMinPrice,
     setMaxPrice,
+    setActualImage,
   };
 };

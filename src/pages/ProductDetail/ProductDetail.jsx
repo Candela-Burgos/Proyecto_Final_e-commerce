@@ -19,23 +19,25 @@ const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
-  // const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
 
-  // const maxStock = () => {
-  //   cart.cartItems.map(
-  //     (cartItem) => cartItem.cartQuantity === cartItem.data.attributes.stock
-  //   );
-  // };
+  const maxStock = () => {
+    const findProduct = cart.cartItems.find(
+      (cartItem) => cartItem.data.id === Number(id)
+    );
+    return (
+      findProduct && findProduct.cartQuantity >= detail.data.attributes.stock
+    );
+  };
 
   const handleAddToCart = (detail) => {
-    if (dispatch(addToCart(detail))) {
-      toast({
-        title: `${detail.data.attributes.title} added to cart.`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+    dispatch(addToCart(detail));
+    toast({
+      title: `${detail.data.attributes.title} added to cart.`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   useEffect(() => {
@@ -56,11 +58,11 @@ const ProductDetail = () => {
         <Box
           key={detail.id}
           display="flex"
-          w="70%"
+          w={['90%', '90%', '90%', '80%', '70%', '70%']}
           h="auto"
           justifyContent="space-evenly"
           alignItems="center"
-          flexDirection="row"
+          flexDirection={['column', 'column', 'row']}
           bgColor="#00000036"
           borderRadius="5px"
           boxShadow="-1px 1px 55px 2px rgba(0,0,0,0.44) inset"
@@ -68,19 +70,23 @@ const ProductDetail = () => {
           <Image
             src={detail.data.attributes.image.data.attributes.url}
             alt={detail.data.attributes.title}
+            w={[150, 200, 200, 200, 'auto', 'auto']}
           />
           <Box
             display="flex"
-            w="50%"
+            w={['90%', '90%', '50%', '50%', '50%', '50%']}
             justifyContent="center"
             alignItems="center"
             flexDirection="column"
+            mb={['2em', '2em', '2em', '2em', 0, 0]}
           >
-            <Heading color="#fff">{detail.data.attributes.title}</Heading>
+            <Heading color="#fff" textAlign="center" my="1em">
+              {detail.data.attributes.title}
+            </Heading>
             <Text color="#fff" textAlign="center">
               {detail.data.attributes.description}
             </Text>
-            <Text color="#fbb13c" my="1em">
+            <Text color="#fbb13c" my="1em" textAlign="center">
               ${detail.data.attributes.price}
             </Text>
             <Flex justifyContent="center" alignItems="center" gap={5}>
@@ -90,7 +96,7 @@ const ProductDetail = () => {
                 </Button>
               </Link>
               <Button
-                // isDisabled={maxStock()}
+                isDisabled={maxStock()}
                 onClick={() => handleAddToCart(detail)}
               >
                 Add to cart

@@ -42,14 +42,14 @@ export const Header = () => {
       left={0}
       zIndex={2}
     >
-      <Heading color="white" ml="2em">
+      <Heading color="white" ml={[0, 0, '2em', '2em', '2em', '2em']}>
         KGS
       </Heading>
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        mr="5em"
+        mr={[0, 0, '5em', '5em', '5em', '5em']}
         w="auto"
       >
         <Link as={NavLink} to="/" color="white" mr="1.5em">
@@ -88,7 +88,7 @@ export const Header = () => {
             h="18%"
             position="absolute"
             top={8}
-            right={158}
+            right={[78, 78, 158, 158, 158, 158]}
             bgColor="red"
           >
             {getTotalQuantity()}

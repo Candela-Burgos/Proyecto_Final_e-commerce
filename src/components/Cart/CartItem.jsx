@@ -12,6 +12,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,10 +23,14 @@ import {
   deleteItemCart,
   increaseQuantity,
 } from '../../Redux/slice/cartSlice';
+import { onOpenModal } from '../../Redux/slice/openModalSlice';
+import { infoOrder } from '../../Redux/slice/ordersSlice';
 
 export const CartItem = () => {
   const cart = useSelector((state) => state.cart);
+  const { jwt, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const getTotal = () => {
     let totalQuantity = 0;
@@ -37,6 +42,38 @@ export const CartItem = () => {
     return { totalQuantity, totalPrice };
   };
 
+  const sendData = async ({ cartItems }) => {
+    if (!user) {
+      dispatch(onOpenModal());
+    } else {
+      const data = {
+        Item: cartItems,
+        users_permissions_user: user.id,
+      };
+      const res = await fetch(`http://localhost:1337/api/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({ data }),
+      });
+      const info = await res.json();
+      if (!info.data) {
+        throw new Error('error');
+      }
+      // dispatch(infoOrder(data));
+      toast({
+        title: 'Thanks for trusting us!',
+        description: `Your purchase has been successful!`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      dispatch(clearCart());
+    }
+  };
+
   return (
     <Flex
       w="100%"
@@ -45,6 +82,7 @@ export const CartItem = () => {
       alignItems="center"
       flexDirection="column"
       mt="4em"
+      mb={['4em', '4em', '4em', 0, 0, 0]}
     >
       <Heading color="#fff">My Cart</Heading>
       {cart.cartItems.length === 0 ? (
@@ -67,15 +105,23 @@ export const CartItem = () => {
           </Flex>
         </Flex>
       ) : (
-        <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+        <Flex
+          w="100%"
+          h="100%"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection={['column', 'column', 'column', 'row', 'row', 'row']}
+        >
           <TableContainer
             color="#fff"
             bgColor="#00000070"
             w="70%"
             h="80%"
+            minW="50%"
             maxH="70%"
             overflowY="auto"
             borderRadius="5px"
+            my={['2em', '2em', '2em', 0, 0, 0]}
           >
             <Table variant="simple">
               <Thead>
@@ -105,7 +151,14 @@ export const CartItem = () => {
                             cartItem.data.attributes.image.data.attributes.url
                           }
                           alt={cartItem.data.attributes.title}
-                          w="10%"
+                          w={[
+                            '50px',
+                            '60px',
+                            '60px',
+                            '100px',
+                            '100px',
+                            '100px',
+                          ]}
                           borderRadius="3px"
                         />
                         <Flex
@@ -177,16 +230,17 @@ export const CartItem = () => {
             </Table>
           </TableContainer>
           <Flex
-            w="60%"
+            w="70%"
             h="70%"
             justifyContent="flex-start"
             alignItems="center"
             flexDirection="column"
-            ml="2em"
+            ml={[0, 0, 0, '2em', '2em', '2em']}
+            mt={['2em', '2em', '2em', 0, 0, 0]}
           >
             <Flex
               w="100%"
-              h="60%"
+              h={['80%', '80%', '80%', '55%', '55%', '60%']}
               justifyContent="flex-start"
               alignItems="flex-start"
               flexDirection="column"
@@ -195,7 +249,7 @@ export const CartItem = () => {
             >
               <Text
                 color="#000"
-                fontSize="2em"
+                fontSize={['1em', '1.5em', '1.5em', '1.7em', '1.7em', '2em']}
                 textAlign="left"
                 m="1em"
                 fontWeight="bold"
@@ -209,14 +263,29 @@ export const CartItem = () => {
                 flexDirection="column"
                 gap={5}
               >
-                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                <Text
+                  color="#000"
+                  fontSize={['1em', '1em', '1em', '1em', '1em', '1.3em']}
+                  textAlign="left"
+                  ml="2em"
+                >
                   <strong>Shipping:</strong> For the moment, we do not do
                   deliveries {":'("}
                 </Text>
-                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                <Text
+                  color="#000"
+                  fontSize={['1em', '1em', '1em', '1em', '1em', '1.3em']}
+                  textAlign="left"
+                  ml="2em"
+                >
                   <strong>Total quantity:</strong> {getTotal().totalQuantity}
                 </Text>
-                <Text color="#000" fontSize="1.3em" textAlign="center" ml="2em">
+                <Text
+                  color="#000"
+                  fontSize={['1em', '1em', '1em', '1em', '1em', '1.3em']}
+                  textAlign="left"
+                  ml="2em"
+                >
                   <strong>Total price:</strong> ${getTotal().totalPrice}
                 </Text>
                 <Flex
@@ -225,9 +294,29 @@ export const CartItem = () => {
                   alignItems="center"
                   mt="1em"
                 >
-                  <Button fontSize="1.3em" w="60%">
-                    Check out
-                  </Button>
+                  {user ? (
+                    <Link
+                      as={NavLink}
+                      to="/products"
+                      w={['auto', 'auto', 'auto', '50%', '50%', '60%']}
+                    >
+                      <Button
+                        fontSize={['1em', '1em', '1em', '1em', '1em', '1.3em']}
+                        w="100%"
+                        onClick={() => sendData(cart)}
+                      >
+                        Check out
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button
+                      fontSize={['1em', '1em', '1em', '1em', '1em', '1.3em']}
+                      w={['auto', 'auto', 'auto', '50%', '50%', '60%']}
+                      onClick={() => sendData(cart)}
+                    >
+                      Check out
+                    </Button>
+                  )}
                 </Flex>
               </Flex>
             </Flex>

@@ -158,6 +158,7 @@ export const CartDrawer = () => {
               ))}
               <Flex
                 w="100%"
+                // h="80vh"
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"

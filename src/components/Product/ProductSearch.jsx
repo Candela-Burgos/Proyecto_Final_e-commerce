@@ -7,7 +7,7 @@ export const ProductSeach = ({ setTitle }) => {
     <HStack
       as="form"
       display="flex"
-      w="20%"
+      w={['80%', '80%', '40%', '40%', '20%', '20%']}
       justify="center"
       alignItems="center"
       className="productSearch"

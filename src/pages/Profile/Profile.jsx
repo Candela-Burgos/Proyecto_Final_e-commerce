@@ -7,8 +7,8 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 export const Profile = () => {

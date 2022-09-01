@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import qs from 'qs';
+import { useEffect, useState } from 'react';
 import { QSFilters } from '../utils/QSFilters';
 
 export const useGet = () => {
@@ -20,6 +19,7 @@ export const useGet = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    // (filtersTitle || filtersCategory || filtersPrice) && setPage(0);
     fetch(
       `http://localhost:1337/api/products?populate=image&populate=categories&${pagination}&${filtersTitle}&${filtersCategory}&${filtersPrice}`
     )

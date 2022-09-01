@@ -7,7 +7,7 @@ export const ProductFilter = ({ setCategories }) => {
     <HStack
       as="form"
       display="flex"
-      w="20%"
+      w={['80%', '80%', '40%', '40%', '20%', '20%']}
       justify="center"
       alignItems="center"
       className="productSearch"
@@ -19,15 +19,26 @@ export const ProductFilter = ({ setCategories }) => {
         bgColor="#00000036"
         _focus={{ outline: 'none' }}
         onChange={(e) => setCategories(e.target.value)}
+        defaultValue=""
       >
-        <option style={{ backgroundColor: '#35258c' }} disabled selected>
+        <option style={{ backgroundColor: '#35258c' }} value="" disabled>
           Choose a category...
         </option>
-        <option style={{ backgroundColor: '#35258c' }}>Action</option>
-        <option style={{ backgroundColor: '#35258c' }}>Battle Royale</option>
-        <option style={{ backgroundColor: '#35258c' }}>Open World</option>
-        <option style={{ backgroundColor: '#35258c' }}>Party</option>
-        <option style={{ backgroundColor: '#35258c' }}>Simulator</option>
+        <option style={{ backgroundColor: '#35258c' }} value="Action">
+          Action
+        </option>
+        <option style={{ backgroundColor: '#35258c' }} value="Battle Royale">
+          Battle Royale
+        </option>
+        <option style={{ backgroundColor: '#35258c' }} value="Open World">
+          Open World
+        </option>
+        <option style={{ backgroundColor: '#35258c' }} value="Party">
+          Party
+        </option>
+        <option style={{ backgroundColor: '#35258c' }} value="Simulator">
+          Simulator
+        </option>
       </Select>
     </HStack>
   );

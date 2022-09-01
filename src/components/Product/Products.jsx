@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
+  Center,
   Flex,
   Image,
   Input,
@@ -32,8 +33,16 @@ const Products = () => {
       <Flex
         w="100%"
         h="auto"
-        justifyContent="center"
+        justifyContent={[
+          'space-around',
+          'space-around',
+          'space-around',
+          'space-around',
+          'center',
+          'center',
+        ]}
         alignItems="center"
+        flexDirection={['column', 'column', 'row', 'row', 'row', 'row']}
         gap={10}
         my="3em"
       >
@@ -62,9 +71,9 @@ const Products = () => {
       )}
       {products &&
         products.map((product) => (
-          <Link key={products.id} to={`/product-detail/${product.id}`}>
+          <Link key={product.id} to={`/product-detail/${product.id}`}>
             <Flex
-              w="280px"
+              w={[200, 200, 200, 200, 280, 280]}
               h="auto"
               justifyContent="center"
               alignItems="center"
