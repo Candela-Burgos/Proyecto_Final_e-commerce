@@ -1,8 +1,8 @@
-# Getting Started with Create React App
+# Proyecto Final E-Commerce
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto trata sobre una tienda de videojuegos, en la que el usuario puede registrarse o iniciar sesión, y comprar el videojuego que desee.
 
-## Available Scripts
+## Comenzando 🚀
 
 In the project directory, you can run:
 
