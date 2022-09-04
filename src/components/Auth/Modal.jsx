@@ -79,19 +79,11 @@ export const ModalLogin = () => {
             >
               Log out <ImExit fontSize="1.3em" />
             </MenuItem>
-            {/* {!logout &&
-              toast({
-                title: 'Good bye',
-                status: 'information',
-                duration: 3000,
-                isClosable: true,
-              })} */}
           </MenuList>
         </Menu>
       ) : (
         <Button
           color="white"
-          // mx="1.5em"
           onClick={() => dispatch(onOpenModal())}
           variant="ghost"
           colorScheme="whiteAlpha"
@@ -107,7 +99,7 @@ export const ModalLogin = () => {
         onClose={() => dispatch(onCloseModal())}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w={['90%', '90%', '90%', '100%', '100%', '100%']}>
           <ModalHeader>
             <Tabs isFitted variant="enclosed" pt="1.2em">
               <TabList>

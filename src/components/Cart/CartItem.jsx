@@ -24,7 +24,6 @@ import {
   increaseQuantity,
 } from '../../Redux/slice/cartSlice';
 import { onOpenModal } from '../../Redux/slice/openModalSlice';
-import { infoOrder } from '../../Redux/slice/ordersSlice';
 
 export const CartItem = () => {
   const cart = useSelector((state) => state.cart);
@@ -53,16 +52,12 @@ export const CartItem = () => {
       const res = await fetch(`http://localhost:1337/api/orders`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${jwt}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ data }),
       });
       const info = await res.json();
-      if (!info.data) {
-        throw new Error('error');
-      }
-      // dispatch(infoOrder(data));
       toast({
         title: 'Thanks for trusting us!',
         description: `Your purchase has been successful!`,
@@ -93,7 +88,12 @@ export const CartItem = () => {
           alignItems="center"
           flexDirection="column"
         >
-          <Text color="#fff">Your cart is empty.</Text>
+          <Text
+            color="#fff"
+            fontSize={['1em', '1.3em', '1.3em', '1.5em', '1.5em', '1.5em']}
+          >
+            Your cart is empty.
+          </Text>
           <Flex
             justifyContent="center"
             alignItems="center"

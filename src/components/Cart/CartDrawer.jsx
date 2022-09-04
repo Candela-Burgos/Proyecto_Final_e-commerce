@@ -48,7 +48,10 @@ export const CartDrawer = () => {
       finalFocusRef={btnRef}
     >
       <DrawerOverlay />
-      <DrawerContent bgColor="#000000">
+      <DrawerContent
+        bgColor="#000000"
+        w={['60%', '60%', '60%', '100%', '100%', '100%']}
+      >
         <DrawerCloseButton />
         <DrawerHeader color="#fff">My cart</DrawerHeader>
         <DrawerBody>
@@ -66,9 +69,8 @@ export const CartDrawer = () => {
               <Link
                 as={NavLink}
                 to="/products"
-                //   onClick={() => console.log(dispatch(onCloseCart()))}
+                // onClick={() => dispatch(onCloseCart())}
               >
-                {/* onClick={() => dispatch(onCloseCart())} */}
                 <Button>Return to the store</Button>
               </Link>
             </Flex>

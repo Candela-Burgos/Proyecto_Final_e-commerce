@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Toast, useToast } from '@chakra-ui/react';
 
 const initialState = {
-  cartItems: [],
-  // cartItems: localStorage.getItem('cartItems')
-  //   ? JSON.parse(localStorage.getItem('cartItems'))
-  //   : [],
-  // isOpenCartState: false,
+  cartItems: localStorage.getItem('cartItems')
+    ? JSON.parse(localStorage.getItem('cartItems'))
+    : [],
 };
 
 const cartSlice = createSlice({
@@ -23,21 +20,25 @@ const cartSlice = createSlice({
         const tempProduct = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProduct);
       }
-
-      // localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     deleteItemCart: (state, action) => {
       const deleteItem = state.cartItems.filter(
         (cartItem) => cartItem.data.id !== action.payload
       );
       state.cartItems = deleteItem;
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
-    clearCart: () => initialState,
+    clearCart: (state) => {
+      state.cartItems = [];
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+    },
     increaseQuantity: (state, action) => {
       const itemIndex = state.cartItems.find(
         (item) => item.data.id === action.payload
       );
       itemIndex.cartQuantity++;
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     decreaseQuantity: (state, action) => {
       const itemIndex = state.cartItems.find(
@@ -48,9 +49,8 @@ const cartSlice = createSlice({
       } else {
         itemIndex.cartQuantity--;
       }
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
-    // onOpenCart: () => true,
-    // onCloseCart: (state) => state.isOpenCartState,
   },
 });
 
@@ -60,7 +60,5 @@ export const {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
-  // onOpenCart,
-  // onCloseCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

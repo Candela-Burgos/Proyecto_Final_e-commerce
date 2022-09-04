@@ -9,7 +9,6 @@ import { Error404 } from './pages/404/Error404';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import { CartItem } from './components/Cart/CartItem';
 import { Orders } from './pages/Orders/Orders';
-import { ModalLogin } from './components/Auth/Modal';
 
 function App() {
   return (
@@ -17,9 +16,9 @@ function App() {
       w="100%"
       justifyContent="center"
       alignItems="center"
-      bgImage="url('https://img.freepik.com/vector-gratis/fondo-galaxia-estrellas-planetas-realistas_23-2148964716.jpg?w=1380&t=st=1661869403~exp=1661870003~hmac=21d419d567bfa119f77196c20aa96cd1972459f55f378c277955fbeba2f82a3f')"
-      bgRepeat="round"
+      bgImage="url('https://img.freepik.com/vector-gratis/fondo-galaxia-acuarela_52683-79849.jpg?w=1380&t=st=1662146670~exp=1662147270~hmac=d738b61dc8aefd0eb08bced0e931f7b36886df3610803a74e6381e587481f5a0')"
       bgSize="100%"
+      bgRepeat="round"
     >
       <ShopLayout>
         <Routes>
