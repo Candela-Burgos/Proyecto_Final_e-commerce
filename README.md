@@ -2,10 +2,6 @@
 
 Este proyecto trata sobre una tienda de videojuegos, en la que el usuario puede registrarse o iniciar sesión, y comprar el videojuego que desee.
 
-## Comenzando 🚀
-
-Aquí podrás ver el proyecto en vivo: (link)
-
 ## Construido con 🛠️
 
 * [Libreria de estilos](https://chakra-ui.com/)
