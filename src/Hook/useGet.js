@@ -19,7 +19,6 @@ export const useGet = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    // (filtersTitle || filtersCategory || filtersPrice) && setPage(0);
     fetch(
       `http://localhost:1337/api/products?populate=image&populate=categories&${pagination}&${filtersTitle}&${filtersCategory}&${filtersPrice}`
     )

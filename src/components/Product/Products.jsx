@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Image,
-  Input,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ProductSeach } from './ProductSearch';
 import { ProductFilter } from './ProductFilter';
@@ -142,9 +133,7 @@ const Products = () => {
             p="5px 10px"
             bgColor="#fff"
           >
-            {/* {query} */}
             21
-            {/* {products.length} */}
           </Text>
         </Box>
         <Button

@@ -66,11 +66,7 @@ export const CartDrawer = () => {
               <Text mt="1em" color="#fff">
                 Your cart is empty.
               </Text>
-              <Link
-                as={NavLink}
-                to="/products"
-                // onClick={() => dispatch(onCloseCart())}
-              >
+              <Link as={NavLink} to="/products">
                 <Button>Return to the store</Button>
               </Link>
             </Flex>
@@ -160,7 +156,6 @@ export const CartDrawer = () => {
               ))}
               <Flex
                 w="100%"
-                // h="80vh"
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
